@@ -1,0 +1,41 @@
+import java.util.*;
+import java.lang.*;
+import java.io.*;
+
+class GFG {
+	public static void main (String[] args) {
+        Scanner s = new Scanner(System.in);
+        int num = s.nextInt();
+        for(int i=0; i<num; i++){
+            int n = s.nextInt();
+            int k = s.nextInt();
+            s.nextLine();
+            String[] arr = s.nextLine().split(" ");
+            System.out.println(findDiff(arr, k));
+        }
+        s.close();
+	}
+	public static int findDiff(String[] arr, int k){
+	    int count=0;
+	    Map<Integer,Integer> m  = new HashMap<>();
+	    for(String s: arr){
+	        int num = Integer.parseInt(s);
+	        if(m.containsKey(num)){
+	            count+=m.get(num);
+	        }
+	        int lookingFor1 = num-k;
+	        int lookingFor2 = num+k;
+	        
+	        recordNextPairMember (lookingFor1, m);
+	        recordNextPairMember(lookingFor2, m);
+	    }
+	    return count;
+	}
+	public static void recordNextPairMember(int num,  Map<Integer,Integer> m){
+	    if(m.containsKey(num)){
+	           m.put(num, m.get(num)+1);
+	        } else {
+	             m.put(num, 1);
+	        }
+	}
+}
