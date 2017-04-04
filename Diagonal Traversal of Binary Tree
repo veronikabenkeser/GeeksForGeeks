@@ -1,0 +1,58 @@
+/*
+http://practice.geeksforgeeks.org/problems/diagonal-traversal-of-binary-tree/1
+
+Given a Binary Tree, print the diagnol traversal of the binary tree.
+
+Consider lines of slope -1 passing between nodes. Given a Binary Tree, print all diagonal elements in a binary tree belonging to same line.
+
+*/
+/* Node is defined as
+class TreeNode
+{
+    int data; //node data
+    TreeNode left, right; //left and right child's reference
+
+    // Tree node constructor
+    public TreeNode(int data)
+    {
+        this.data = data;
+         left = right = null;
+    }
+}*/
+
+class GfG
+{
+    private TreeNode root = null;
+    
+    public GfG(TreeNode root){
+        this.root = root;
+    }
+    
+     public void diagonalPrint()
+      {
+          List<List<TreeNode>> l = new ArrayList<>();
+          gatherIntoLanes(0, root, l);
+          printLanes(l);
+      }
+      
+      public void printLanes(List<List<TreeNode>> l){
+          for(List<TreeNode> subList: l){
+              for(TreeNode n: subList){
+                   System.out.print(n.data);
+                   System.out.print(" ");
+              }
+          }
+      }
+      
+      public void gatherIntoLanes(int lane, TreeNode root, List<List<TreeNode>> l){
+          if(root == null){
+              return;
+          }
+          if(l.size() <= lane){
+              l.add(lane, new ArrayList<>());
+          } 
+          l.get(lane).add(root);
+          gatherIntoLanes(lane+1, root.left, l);
+          gatherIntoLanes(lane, root.right, l);
+      }
+}
